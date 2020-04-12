@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchDailyData } from '../../api';
-import { Line, Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import styles from './Charts.module.css';
 export default function Charts() {
 	const [dailyData, setDailyData] = useState([]);
@@ -10,12 +10,14 @@ export default function Charts() {
 		};
 
 		fetchAPI();
-	});
+	}, []);
 
 	const lineChart =
 		dailyData.length !== 0 ? (
 			<Line
+				options={{ maintainAspectRatio: false }}
 				data={{
+					maintainAspectRatio: false,
 					labels: dailyData.map(({ date }) => date),
 					datasets: [
 						{
@@ -39,6 +41,7 @@ export default function Charts() {
 		<div className={styles.container}>
 			<h3>国内疫情</h3>
 			{lineChart}
+			<div className={styles.line}></div>
 		</div>
 	);
 }
